@@ -12,49 +12,75 @@ function UserDashboard() {
     "Content Writing",
     "App Development",
     "Video Editing",
-    "Home Services"
+    "Home Services",
   ];
 
   return (
-    <div style={{ padding: "40px" }}>
+    <div style={{ padding: "40px", color: "white" }}>
 
       {/* Welcome Section */}
       <div
         style={{
-          backgroundColor: "#2563eb",
+          background: "linear-gradient(135deg, #2563eb, #6366f1)",
           color: "white",
-          padding: "30px",
-          borderRadius: "12px",
-          marginBottom: "40px",
+          padding: "35px",
+          borderRadius: "16px",
+          marginBottom: "50px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
         }}
       >
-        <h1>Welcome to ProHire 👋</h1>
-        <p style={{ marginTop: "10px" }}>
+        <h1 style={{ fontSize: "32px", marginBottom: "10px" }}>
+          Welcome to ProHire 👋
+        </h1>
+        <p style={{ opacity: 0.9 }}>
           ProHire connects you with trusted professionals across multiple
           industries. Explore services, hire experts, and grow with confidence.
         </p>
       </div>
 
       {/* Services Section */}
-      <h2 style={{ marginBottom: "20px" }}>Our Services</h2>
+      <h2
+        style={{
+          marginBottom: "25px",
+          fontSize: "26px",
+          fontWeight: "600",
+          letterSpacing: "1px",
+        }}
+      >
+        Our Services
+      </h2>
 
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "20px",
-          marginBottom: "40px",
+          marginBottom: "50px",
         }}
       >
         {services.map((service, index) => (
-          <div key={index} className="zoom-hover" style={serviceCard}>
+          <div
+            key={index}
+            className="zoom-hover"
+            style={serviceCard}
+            onClick={() => navigate(`/service/${encodeURIComponent(service)}`)}
+          >
             {service}
           </div>
         ))}
       </div>
 
       {/* Quick Actions */}
-      <h2 style={{ marginBottom: "20px" }}>Quick Actions</h2>
+      <h2
+        style={{
+          marginBottom: "25px",
+          fontSize: "26px",
+          fontWeight: "600",
+          letterSpacing: "1px",
+        }}
+      >
+        Quick Actions
+      </h2>
 
       <div
         style={{
@@ -63,7 +89,6 @@ function UserDashboard() {
           gap: "25px",
         }}
       >
-        {/* Search */}
         <div
           className="zoom-hover"
           style={actionCard}
@@ -73,7 +98,6 @@ function UserDashboard() {
           <p>Browse and hire skilled professionals instantly.</p>
         </div>
 
-        {/* My Bookings */}
         <div
           className="zoom-hover"
           style={actionCard}
@@ -83,7 +107,6 @@ function UserDashboard() {
           <p>Track and manage your service bookings.</p>
         </div>
 
-        {/* Wallet */}
         <div
           className="zoom-hover"
           style={actionCard}
@@ -98,21 +121,26 @@ function UserDashboard() {
 }
 
 const serviceCard = {
-  padding: "20px",
-  backgroundColor: "white",
-  borderRadius: "10px",
-  boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
+  padding: "22px",
+  background: "rgba(255,255,255,0.15)",
+  borderRadius: "14px",
+  backdropFilter: "blur(10px)",
+  color: "white",
   textAlign: "center",
   fontWeight: "500",
   cursor: "pointer",
+  transition: "0.3s",
 };
 
 const actionCard = {
   padding: "30px",
-  backgroundColor: "white",
-  borderRadius: "12px",
-  boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
+  background: "rgba(255,255,255,0.15)",
+  borderRadius: "16px",
+  backdropFilter: "blur(12px)",
+  color: "white",
+  boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
   cursor: "pointer",
+  transition: "0.3s",
 };
 
 export default UserDashboard;

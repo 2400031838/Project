@@ -1,89 +1,203 @@
+import { useEffect, useState } from "react";
 import "../index.css";
 
 function AdminDashboard() {
-  return (
-    <div style={{ padding: "40px" }}>
+  const [users, setUsers] = useState([]);
+  const [pros, setPros] = useState([]);
+  const [services, setServices] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
-      {/* Welcome Section */}
-      <div style={{
-        backgroundColor: "#7c3aed",
-        color: "white",
-        padding: "30px",
-        borderRadius: "12px",
-        marginBottom: "40px"
-      }}>
+  useEffect(() => {
+    const storedUsers =
+      JSON.parse(localStorage.getItem("users")) || [];
+
+    const storedPros =
+      JSON.parse(localStorage.getItem("professionals")) || [];
+
+    const storedServices =
+      JSON.parse(localStorage.getItem("services")) || [];
+
+    const storedBookings =
+      JSON.parse(localStorage.getItem("bookings")) || [];
+
+    setUsers(storedUsers);
+    setPros(storedPros);
+    setServices(storedServices);
+    setBookings(storedBookings);
+  }, []);
+
+  // Delete User
+  const handleDeleteUser = (index) => {
+    const updated = [...users];
+    updated.splice(index, 1);
+
+    localStorage.setItem("users", JSON.stringify(updated));
+    setUsers(updated);
+  };
+
+  // Approve Professional
+  const handleApprovePro = (index) => {
+    const updated = [...pros];
+    updated[index].status = "Approved";
+
+    localStorage.setItem("professionals", JSON.stringify(updated));
+    setPros(updated);
+  };
+
+  // Delete Service
+  const handleDeleteService = (index) => {
+    const updated = [...services];
+    updated.splice(index, 1);
+
+    localStorage.setItem("services", JSON.stringify(updated));
+    setServices(updated);
+  };
+
+  return (
+    <div style={{ padding: "40px", color: "white" }}>
+
+      {/* Header */}
+      <div style={headerStyle}>
         <h1>Admin Dashboard 🛡️</h1>
-        <p style={{ marginTop: "10px" }}>
-          Manage users, monitor services, and control the ProHire platform.
-        </p>
+        <p>Manage users, professionals, services and bookings.</p>
       </div>
 
-      {/* Platform Stats */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "20px",
-        marginBottom: "40px"
-      }}>
-        <div className="zoom-hover" style={statCard}>
-          <h2>120</h2>
+      {/* Stats */}
+      <div style={statsGrid}>
+        <div style={statCard}>
+          <h2>{users.length}</h2>
           <p>Total Users</p>
         </div>
 
-        <div className="zoom-hover" style={statCard}>
-          <h2>45</h2>
+        <div style={statCard}>
+          <h2>{pros.length}</h2>
           <p>Professionals</p>
         </div>
 
-        <div className="zoom-hover" style={statCard}>
-          <h2>320</h2>
+        <div style={statCard}>
+          <h2>{bookings.length}</h2>
           <p>Total Bookings</p>
         </div>
       </div>
 
-      {/* Admin Controls */}
-      <h2 style={{ marginBottom: "20px" }}>Admin Controls</h2>
+      {/* Manage Users */}
+      <h2 style={{ marginTop: "50px" }}>Manage Users</h2>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: "25px"
-      }}>
-        <div className="zoom-hover" style={cardStyle}>
-          <h3>Manage Users</h3>
-          <p>View, block, or remove user accounts.</p>
-        </div>
+      {users.length === 0 && <p>No users found.</p>}
 
-        <div className="zoom-hover" style={cardStyle}>
-          <h3>Approve Professionals</h3>
-          <p>Verify and approve new professional registrations.</p>
+      {users.map((user, index) => (
+        <div key={index} style={cardStyle}>
+          <p>{user.email || user.name}</p>
+          <button
+            onClick={() => handleDeleteUser(index)}
+            style={deleteBtn}
+          >
+            Delete
+          </button>
         </div>
+      ))}
 
-        <div className="zoom-hover" style={cardStyle}>
-          <h3>Manage Services</h3>
-          <p>Edit or remove service listings.</p>
+      {/* Approve Professionals */}
+      <h2 style={{ marginTop: "50px" }}>Approve Professionals</h2>
+
+      {pros.length === 0 && <p>No professionals found.</p>}
+
+      {pros.map((pro, index) => (
+        <div key={index} style={cardStyle}>
+          <p>
+            {pro.name} -{" "}
+            <span
+              style={{
+                color:
+                  pro.status === "Approved"
+                    ? "#22c55e"
+                    : "#facc15",
+              }}
+            >
+              {pro.status || "Pending"}
+            </span>
+          </p>
+
+          {pro.status !== "Approved" && (
+            <button
+              onClick={() => handleApprovePro(index)}
+              style={approveBtn}
+            >
+              Approve
+            </button>
+          )}
         </div>
-      </div>
+      ))}
+
+      {/* Manage Services */}
+      <h2 style={{ marginTop: "50px" }}>Manage Services</h2>
+
+      {services.length === 0 && <p>No services found.</p>}
+
+      {services.map((service, index) => (
+        <div key={index} style={cardStyle}>
+          <p>{service.name || service}</p>
+          <button
+            onClick={() => handleDeleteService(index)}
+            style={deleteBtn}
+          >
+            Remove
+          </button>
+        </div>
+      ))}
 
     </div>
   );
 }
 
+/* Styles */
+
+const headerStyle = {
+  background: "linear-gradient(135deg, #7c3aed, #9333ea)",
+  padding: "30px",
+  borderRadius: "16px",
+  marginBottom: "40px",
+};
+
+const statsGrid = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+  gap: "25px",
+};
+
 const statCard = {
+  background: "rgba(255,255,255,0.15)",
   padding: "25px",
-  backgroundColor: "white",
-  borderRadius: "12px",
-  boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
+  borderRadius: "14px",
   textAlign: "center",
-  cursor: "pointer"
 };
 
 const cardStyle = {
-  padding: "30px",
-  backgroundColor: "white",
-  borderRadius: "12px",
-  boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
-  cursor: "pointer"
+  background: "rgba(255,255,255,0.15)",
+  padding: "15px",
+  borderRadius: "10px",
+  marginTop: "15px",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+};
+
+const deleteBtn = {
+  background: "#ef4444",
+  color: "white",
+  border: "none",
+  padding: "6px 12px",
+  borderRadius: "6px",
+  cursor: "pointer",
+};
+
+const approveBtn = {
+  background: "#22c55e",
+  color: "white",
+  border: "none",
+  padding: "6px 12px",
+  borderRadius: "6px",
+  cursor: "pointer",
 };
 
 export default AdminDashboard;

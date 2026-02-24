@@ -62,11 +62,7 @@ function Login() {
       >
         <h2 style={{ marginBottom: "25px" }}>Login to ProHire 🚀</h2>
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          style={inputStyle}
-        />
+        <input type="email" placeholder="Enter Email" style={inputStyle} />
 
         <input
           type="password"
@@ -74,7 +70,6 @@ function Login() {
           style={inputStyle}
         />
 
-        {/* ROLE DROPDOWN (VISIBLE FIXED VERSION) */}
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
@@ -87,7 +82,7 @@ function Login() {
           <option value="Support">Support</option>
         </select>
 
-        {/* CAPTCHA DISPLAY */}
+        {/* CAPTCHA */}
         <div
           style={{
             margin: "15px 0",
@@ -114,6 +109,21 @@ function Login() {
         <button style={buttonStyle} onClick={handleLogin}>
           Login
         </button>
+
+        {/* NEW REGISTER LINK */}
+        <p style={{ marginTop: "20px", fontSize: "14px" }}>
+          Don’t have an account?{" "}
+          <span
+            style={{
+              color: "#60a5fa",
+              cursor: "pointer",
+              fontWeight: "500",
+            }}
+            onClick={() => navigate("/register")}
+          >
+            Create one
+          </span>
+        </p>
       </div>
     </div>
   );
