@@ -7,13 +7,23 @@ function ProfessionalDashboard() {
 
   const [earnings, setEarnings] = useState(0);
   const [clients, setClients] = useState(0);
+  const [averageRating, setAverageRating] = useState("0 ⭐");
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     const storedBookings =
       JSON.parse(localStorage.getItem("bookings")) || [];
 
+    if (storedBookings.length === 0) {
+      // Demo values if no bookings yet
+      setEarnings(12500);
+      setClients(8);
+      setAverageRating("4.7 ⭐");
+      return;
+    }
+
     let total = 0;
+    let totalRating = 0;
 
     storedBookings.forEach((b) => {
       const priceNumber = b.price
@@ -21,10 +31,20 @@ function ProfessionalDashboard() {
         : 0;
 
       total += priceNumber;
+
+      if (b.rating) {
+        totalRating += parseFloat(b.rating);
+      }
     });
+
+    const avg =
+      storedBookings.length > 0
+        ? (totalRating / storedBookings.length).toFixed(1)
+        : "4.5";
 
     setEarnings(total);
     setClients(storedBookings.length);
+    setAverageRating(avg + " ⭐");
     setBookings(storedBookings);
   }, []);
 
@@ -50,7 +70,7 @@ function ProfessionalDashboard() {
         </div>
 
         <div style={statCard}>
-          <h2>{clients > 0 ? "4.8 ⭐" : "0 ⭐"}</h2>
+          <h2>{averageRating}</h2>
           <p>Average Rating</p>
         </div>
       </div>

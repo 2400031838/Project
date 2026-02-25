@@ -7,6 +7,7 @@ function Login() {
   const [role, setRole] = useState("");
   const [captchaText, setCaptchaText] = useState("");
   const [userInput, setUserInput] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     generateCaptcha();
@@ -35,8 +36,24 @@ function Login() {
       return;
     }
 
+    if (!email) {
+      alert("Please enter email");
+      return;
+    }
+
+    /* ✅ SAVE USER TO LOCALSTORAGE */
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        name: email.split("@")[0],  // show username before @
+        role: role,
+      })
+    );
+
+    /* ✅ Navigate Based on Role */
     if (role === "User") navigate("/user-dashboard");
-    else if (role === "Professional") navigate("/professional-dashboard");
+    else if (role === "Professional")
+      navigate("/professional-dashboard");
     else if (role === "Admin") navigate("/admin-dashboard");
     else if (role === "Support") navigate("/support-dashboard");
   };
@@ -62,7 +79,13 @@ function Login() {
       >
         <h2 style={{ marginBottom: "25px" }}>Login to ProHire 🚀</h2>
 
-        <input type="email" placeholder="Enter Email" style={inputStyle} />
+        <input
+          type="email"
+          placeholder="Enter Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={inputStyle}
+        />
 
         <input
           type="password"
@@ -110,7 +133,6 @@ function Login() {
           Login
         </button>
 
-        {/* NEW REGISTER LINK */}
         <p style={{ marginTop: "20px", fontSize: "14px" }}>
           Don’t have an account?{" "}
           <span

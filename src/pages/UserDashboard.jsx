@@ -4,15 +4,12 @@ import "../index.css";
 function UserDashboard() {
   const navigate = useNavigate();
 
-  const services = [
-    "Web Development",
-    "Graphic Designing",
-    "Digital Marketing",
-    "Photography",
-    "Content Writing",
-    "App Development",
-    "Video Editing",
-    "Home Services",
+  const categories = [
+    { name: "Technical", label: "💻 Technical / Digital" },
+    { name: "Home", label: "🏠 Home & Local" },
+    { name: "Academic", label: "📚 Academic / Training" },
+    { name: "Creative", label: "🎨 Creative" },
+    { name: "Professional", label: "💼 Professional" },
   ];
 
   return (
@@ -38,7 +35,7 @@ function UserDashboard() {
         </p>
       </div>
 
-      {/* Services Section */}
+      {/* Category Section */}
       <h2
         style={{
           marginBottom: "25px",
@@ -53,19 +50,19 @@ function UserDashboard() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "20px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "25px",
           marginBottom: "50px",
         }}
       >
-        {services.map((service, index) => (
+        {categories.map((category, index) => (
           <div
             key={index}
             className="zoom-hover"
             style={serviceCard}
-            onClick={() => navigate(`/service/${encodeURIComponent(service)}`)}
+            onClick={() => navigate(`/category/${category.name}`)}
           >
-            {service}
+            {category.label}
           </div>
         ))}
       </div>
@@ -121,13 +118,14 @@ function UserDashboard() {
 }
 
 const serviceCard = {
-  padding: "22px",
+  padding: "28px",
   background: "rgba(255,255,255,0.15)",
   borderRadius: "14px",
   backdropFilter: "blur(10px)",
   color: "white",
   textAlign: "center",
-  fontWeight: "500",
+  fontWeight: "600",
+  fontSize: "18px",
   cursor: "pointer",
   transition: "0.3s",
 };

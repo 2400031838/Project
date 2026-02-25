@@ -9,78 +9,127 @@ function ServiceDetails() {
   const [hiredList, setHiredList] = useState([]);
 
   const professionalsData = {
-    "Web Development": [
-      { name: "Rahul Sharma", exp: "5 Years Experience", rating: "4.8 ⭐", price: "₹500 / hour" },
-      { name: "Ankit Verma", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹350 / hour" },
-      { name: "Kiran Reddy", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹800 / hour" },
-      { name: "Megha Joshi", exp: "4 Years Experience", rating: "4.7 ⭐", price: "₹400 / hour" },
-      { name: "Sanjay Patel", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹8000 / hour" },
-      { name: "Divya Nair", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹300 / hour" },
-    ],
 
-    "Graphic Designing": [
-      { name: "Priya Verma", exp: "4 Years Experience", rating: "4.8 ⭐", price: "₹900 / hour" },
-      { name: "Arjun Mehta", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹1300 / hour" },
-      { name: "Sneha Kapoor", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹800 / hour" },
-      { name: "Rohan Das", exp: "5 Years Experience", rating: "4.7 ⭐", price: "₹1100 / hour" },
-      { name: "Ishita Rao", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹700 / hour" },
-      { name: "Varun Singh", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹1500 / hour" },
-    ],
+  /* ================= TECHNICAL ================= */
 
-    "Digital Marketing": [
-      { name: "Aman Gupta", exp: "5 Years Experience", rating: "4.7 ⭐", price: "₹1400 / hour" },
-      { name: "Neha Sharma", exp: "4 Years Experience", rating: "4.8 ⭐", price: "₹1200 / hour" },
-      { name: "Vikram Rao", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹1800 / hour" },
-      { name: "Pooja Mehra", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹1000 / hour" },
-      { name: "Karthik Iyer", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹2000 / hour" },
-      { name: "Ritika Jain", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹900 / hour" },
-    ],
+  "Web Development": [
+    { name: "Rahul Tech", exp: "3 Years", rating: "4.6 ⭐", price: "₹800 / project" },
+    { name: "Sneha Code", exp: "2 Years", rating: "4.5 ⭐", price: "₹700 / project" },
+  ],
 
-    "Photography": [
-      { name: "Manish Yadav", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹5000 / event" },
-      { name: "Tanya Singh", exp: "4 Years Experience", rating: "4.7 ⭐", price: "₹4000 / event" },
-      { name: "Aditya Rao", exp: "5 Years Experience", rating: "4.8 ⭐", price: "₹4500 / event" },
-      { name: "Nisha Kapoor", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹3500 / event" },
-      { name: "Harsha Reddy", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹6000 / event" },
-      { name: "Komal Verma", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹3000 / event" },
-    ],
+  "Mobile App Development": [
+    { name: "Kiran Apps", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
+    { name: "Ananya Mobile", exp: "2 Years", rating: "4.4 ⭐", price: "₹750 / project" },
+  ],
 
-    "Content Writing": [
-      { name: "Lavanya Rao", exp: "5 Years Experience", rating: "4.8 ⭐", price: "₹800 / article" },
-      { name: "Rohit Menon", exp: "4 Years Experience", rating: "4.7 ⭐", price: "₹750 / article" },
-      { name: "Snehal Gupta", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹600 / article" },
-      { name: "Arpita Das", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹1000 / article" },
-      { name: "Kunal Jain", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹1200 / article" },
-      { name: "Bhavna Kapoor", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹500 / article" },
-    ],
+  "UI/UX Design": [
+    { name: "Priya Design", exp: "3 Years", rating: "4.8 ⭐", price: "₹600 / project" },
+    { name: "Rohan UI", exp: "2 Years", rating: "4.6 ⭐", price: "₹550 / project" },
+  ],
 
-    "App Development": [
-      { name: "Ritesh Kumar", exp: "5 Years Experience", rating: "4.8 ⭐", price: "₹2000 / hour" },
-      { name: "Ananya Singh", exp: "4 Years Experience", rating: "4.7 ⭐", price: "₹1800 / hour" },
-      { name: "Siddharth Rao", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹2500 / hour" },
-      { name: "Mounika Reddy", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹1600 / hour" },
-      { name: "Tarun Mehta", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹3000 / hour" },
-      { name: "Isha Patel", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹1200 / hour" },
-    ],
+  "Data Analysis": [
+    { name: "Amit Analyst", exp: "4 Years", rating: "4.7 ⭐", price: "₹850 / project" },
+    { name: "Divya Data", exp: "3 Years", rating: "4.6 ⭐", price: "₹750 / project" },
+  ],
 
-    "Video Editing": [
-      { name: "Akash Verma", exp: "5 Years Experience", rating: "4.8 ⭐", price: "₹1500 / project" },
-      { name: "Neeraj Singh", exp: "4 Years Experience", rating: "4.7 ⭐", price: "₹1200 / project" },
-      { name: "Sonal Kapoor", exp: "3 Years Experience", rating: "4.6 ⭐", price: "₹1000 / project" },
-      { name: "Pranav Reddy", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹2000 / project" },
-      { name: "Divyanshi Jain", exp: "2 Years Experience", rating: "4.5 ⭐", price: "₹800 / project" },
-      { name: "Harshit Gupta", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹2500 / project" },
-    ],
+  "Software Testing": [
+    { name: "Vikas QA", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
+    { name: "Meera Tester", exp: "2 Years", rating: "4.5 ⭐", price: "₹600 / project" },
+  ],
 
-    "Home Services": [
-      { name: "Ramesh Kumar", exp: "8 Years Experience", rating: "4.8 ⭐", price: "₹700 / visit" },
-      { name: "Suresh Patel", exp: "5 Years Experience", rating: "4.7 ⭐", price: "₹600 / visit" },
-      { name: "Ganesh Rao", exp: "6 Years Experience", rating: "4.9 ⭐", price: "₹800 / visit" },
-      { name: "Mahesh Singh", exp: "4 Years Experience", rating: "4.6 ⭐", price: "₹550 / visit" },
-      { name: "Venkatesh Iyer", exp: "7 Years Experience", rating: "4.9 ⭐", price: "₹900 / visit" },
-      { name: "Ajay Sharma", exp: "3 Years Experience", rating: "4.5 ⭐", price: "₹500 / visit" },
-    ],
-  };
+  "Cybersecurity Support": [
+    { name: "Arjun Secure", exp: "4 Years", rating: "4.9 ⭐", price: "₹1000 / project" },
+    { name: "Nisha Cyber", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
+  ],
+
+  /* ================= HOME ================= */
+
+  "Electrician": [
+    { name: "Manoj Kumar", exp: "6 Years", rating: "4.7 ⭐", price: "₹350 / visit" },
+    { name: "Suresh Reddy", exp: "5 Years", rating: "4.6 ⭐", price: "₹300 / visit" },
+  ],
+
+  "Plumber": [
+    { name: "Ravi Plumbing", exp: "7 Years", rating: "4.8 ⭐", price: "₹400 / visit" },
+    { name: "Naresh Pipes", exp: "5 Years", rating: "4.6 ⭐", price: "₹350 / visit" },
+  ],
+
+  "Carpenter": [
+    { name: "Harish Wood", exp: "6 Years", rating: "4.7 ⭐", price: "₹450 / work" },
+    { name: "Rakesh Craft", exp: "4 Years", rating: "4.5 ⭐", price: "₹380 / work" },
+  ],
+
+  "House Cleaning": [
+    { name: "CleanPro Services", exp: "5 Years", rating: "4.8 ⭐", price: "₹500 / visit" },
+    { name: "FreshHome Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹450 / visit" },
+  ],
+
+  "AC Repair": [
+    { name: "CoolAir Tech", exp: "6 Years", rating: "4.7 ⭐", price: "₹600 / visit" },
+    { name: "Smart Cooling", exp: "4 Years", rating: "4.6 ⭐", price: "₹550 / visit" },
+  ],
+
+  /* ================= ACADEMIC ================= */
+
+  "Coding Tutor": [
+    { name: "Ankit Sir", exp: "3 Years", rating: "4.9 ⭐", price: "₹500 / session" },
+    { name: "Megha Mam", exp: "2 Years", rating: "4.7 ⭐", price: "₹450 / session" },
+  ],
+
+  "Project Guidance": [
+    { name: "Arun Guide", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
+    { name: "Priya Mentor", exp: "3 Years", rating: "4.6 ⭐", price: "₹650 / project" },
+  ],
+
+  "Exam Coaching": [
+    { name: "Rakesh Sir", exp: "8 Years", rating: "4.9 ⭐", price: "₹600 / session" },
+    { name: "Deepa Mam", exp: "5 Years", rating: "4.7 ⭐", price: "₹550 / session" },
+  ],
+
+  "Assignment Help": [
+    { name: "StudyAssist Team", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / assignment" },
+    { name: "EduPro Experts", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / assignment" },
+  ],
+
+  /* ================= CREATIVE ================= */
+
+  "Graphic Design": [
+    { name: "Ritika Arts", exp: "3 Years", rating: "4.8 ⭐", price: "₹500 / design" },
+    { name: "Aditya Design", exp: "4 Years", rating: "4.7 ⭐", price: "₹600 / design" },
+  ],
+
+  "Video Editing": [
+    { name: "Rohan Editz", exp: "3 Years", rating: "4.7 ⭐", price: "₹700 / video" },
+    { name: "Aisha Studio", exp: "2 Years", rating: "4.5 ⭐", price: "₹650 / video" },
+  ],
+
+  "Content Writing": [
+    { name: "Kavya Writes", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / article" },
+    { name: "ContentPro Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / article" },
+  ],
+
+  "Photography": [
+    { name: "LensMaster Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹1200 / event" },
+    { name: "SnapShot Studio", exp: "4 Years", rating: "4.7 ⭐", price: "₹1000 / event" },
+  ],
+
+  /* ================= PROFESSIONAL ================= */
+
+  "Resume Building": [
+    { name: "CareerPro Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹400 / resume" },
+    { name: "Shalini HR", exp: "4 Years", rating: "4.7 ⭐", price: "₹350 / resume" },
+  ],
+
+  "Digital Marketing": [
+    { name: "MarketBoost Team", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / campaign" },
+    { name: "SEO Experts", exp: "4 Years", rating: "4.6 ⭐", price: "₹750 / campaign" },
+  ],
+
+  "Business Consulting": [
+    { name: "Vivek Advisor", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / session" },
+    { name: "Aman Strategy", exp: "5 Years", rating: "4.7 ⭐", price: "₹850 / session" },
+  ],
+};
 
   const professionals = professionalsData[decodedService] || [];
 

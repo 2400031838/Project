@@ -10,6 +10,7 @@ import SupportDashboard from "./pages/SupportDashboard";
 import Search from "./pages/Search";
 import MyBookings from "./pages/MyBookings";
 import ServiceDetails from "./pages/ServiceDetails";
+import CategoryServices from "./pages/CategoryServices";  
 
 /* ✅ ADD THESE IMPORTS */
 import AddService from "./pages/AddService";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/add-service" element={<AddService />} />
           <Route path="/view-bookings" element={<ViewBookings />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/category/:categoryName" element={<CategoryServices />} />
         </Routes>
       </div>
     </BrowserRouter>
