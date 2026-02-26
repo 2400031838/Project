@@ -6,135 +6,171 @@ function ServiceDetails() {
   const decodedService = decodeURIComponent(serviceName);
 
   const [selectedPro, setSelectedPro] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
   const [hiredList, setHiredList] = useState([]);
+  const [availabilityMsg, setAvailabilityMsg] = useState("");
 
   const professionalsData = {
 
-  /* ================= TECHNICAL ================= */
+    /* ================= TECHNICAL ================= */
 
-  "Web Development": [
-    { name: "Rahul Tech", exp: "3 Years", rating: "4.6 ⭐", price: "₹800 / project" },
-    { name: "Sneha Code", exp: "2 Years", rating: "4.5 ⭐", price: "₹700 / project" },
-  ],
+    "Web Development": [
+      { name: "Rahul Tech", exp: "3 Years", rating: "4.6 ⭐", price: "₹800 / project" },
+      { name: "Sneha Code", exp: "2 Years", rating: "4.5 ⭐", price: "₹700 / project" },
+    ],
 
-  "Mobile App Development": [
-    { name: "Kiran Apps", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
-    { name: "Ananya Mobile", exp: "2 Years", rating: "4.4 ⭐", price: "₹750 / project" },
-  ],
+    "Mobile App Development": [
+      { name: "Kiran Apps", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
+      { name: "Ananya Mobile", exp: "2 Years", rating: "4.4 ⭐", price: "₹750 / project" },
+    ],
 
-  "UI/UX Design": [
-    { name: "Priya Design", exp: "3 Years", rating: "4.8 ⭐", price: "₹600 / project" },
-    { name: "Rohan UI", exp: "2 Years", rating: "4.6 ⭐", price: "₹550 / project" },
-  ],
+    "UI/UX Design": [
+      { name: "Priya Design", exp: "3 Years", rating: "4.8 ⭐", price: "₹600 / project" },
+      { name: "Rohan UI", exp: "2 Years", rating: "4.6 ⭐", price: "₹550 / project" },
+    ],
 
-  "Data Analysis": [
-    { name: "Amit Analyst", exp: "4 Years", rating: "4.7 ⭐", price: "₹850 / project" },
-    { name: "Divya Data", exp: "3 Years", rating: "4.6 ⭐", price: "₹750 / project" },
-  ],
+    "Data Analysis": [
+      { name: "Amit Analyst", exp: "4 Years", rating: "4.7 ⭐", price: "₹850 / project" },
+      { name: "Divya Data", exp: "3 Years", rating: "4.6 ⭐", price: "₹750 / project" },
+    ],
 
-  "Software Testing": [
-    { name: "Vikas QA", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
-    { name: "Meera Tester", exp: "2 Years", rating: "4.5 ⭐", price: "₹600 / project" },
-  ],
+    "Software Testing": [
+      { name: "Vikas QA", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
+      { name: "Meera Tester", exp: "2 Years", rating: "4.5 ⭐", price: "₹600 / project" },
+    ],
 
-  "Cybersecurity Support": [
-    { name: "Arjun Secure", exp: "4 Years", rating: "4.9 ⭐", price: "₹1000 / project" },
-    { name: "Nisha Cyber", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
-  ],
+    "Cybersecurity Support": [
+      { name: "Arjun Secure", exp: "4 Years", rating: "4.9 ⭐", price: "₹1000 / project" },
+      { name: "Nisha Cyber", exp: "3 Years", rating: "4.7 ⭐", price: "₹900 / project" },
+    ],
 
-  /* ================= HOME ================= */
+    /* ================= HOME ================= */
 
-  "Electrician": [
-    { name: "Manoj Kumar", exp: "6 Years", rating: "4.7 ⭐", price: "₹350 / visit" },
-    { name: "Suresh Reddy", exp: "5 Years", rating: "4.6 ⭐", price: "₹300 / visit" },
-  ],
+    "Electrician": [
+      { name: "Manoj Kumar", exp: "6 Years", rating: "4.7 ⭐", price: "₹350 / visit" },
+      { name: "Suresh Reddy", exp: "5 Years", rating: "4.6 ⭐", price: "₹300 / visit" },
+    ],
 
-  "Plumber": [
-    { name: "Ravi Plumbing", exp: "7 Years", rating: "4.8 ⭐", price: "₹400 / visit" },
-    { name: "Naresh Pipes", exp: "5 Years", rating: "4.6 ⭐", price: "₹350 / visit" },
-  ],
+    "Plumber": [
+      { name: "Ravi Plumbing", exp: "7 Years", rating: "4.8 ⭐", price: "₹400 / visit" },
+      { name: "Naresh Pipes", exp: "5 Years", rating: "4.6 ⭐", price: "₹350 / visit" },
+    ],
 
-  "Carpenter": [
-    { name: "Harish Wood", exp: "6 Years", rating: "4.7 ⭐", price: "₹450 / work" },
-    { name: "Rakesh Craft", exp: "4 Years", rating: "4.5 ⭐", price: "₹380 / work" },
-  ],
+    "Carpenter": [
+      { name: "Harish Wood", exp: "6 Years", rating: "4.7 ⭐", price: "₹450 / work" },
+      { name: "Rakesh Craft", exp: "4 Years", rating: "4.5 ⭐", price: "₹380 / work" },
+    ],
 
-  "House Cleaning": [
-    { name: "CleanPro Services", exp: "5 Years", rating: "4.8 ⭐", price: "₹500 / visit" },
-    { name: "FreshHome Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹450 / visit" },
-  ],
+    "House Cleaning": [
+      { name: "CleanPro Services", exp: "5 Years", rating: "4.8 ⭐", price: "₹500 / visit" },
+      { name: "FreshHome Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹450 / visit" },
+    ],
 
-  "AC Repair": [
-    { name: "CoolAir Tech", exp: "6 Years", rating: "4.7 ⭐", price: "₹600 / visit" },
-    { name: "Smart Cooling", exp: "4 Years", rating: "4.6 ⭐", price: "₹550 / visit" },
-  ],
+    "AC Repair": [
+      { name: "CoolAir Tech", exp: "6 Years", rating: "4.7 ⭐", price: "₹600 / visit" },
+      { name: "Smart Cooling", exp: "4 Years", rating: "4.6 ⭐", price: "₹550 / visit" },
+    ],
 
-  /* ================= ACADEMIC ================= */
+    /* ================= ACADEMIC ================= */
 
-  "Coding Tutor": [
-    { name: "Ankit Sir", exp: "3 Years", rating: "4.9 ⭐", price: "₹500 / session" },
-    { name: "Megha Mam", exp: "2 Years", rating: "4.7 ⭐", price: "₹450 / session" },
-  ],
+    "Coding Tutor": [
+      { name: "Ankit Sir", exp: "3 Years", rating: "4.9 ⭐", price: "₹500 / session" },
+      { name: "Megha Mam", exp: "2 Years", rating: "4.7 ⭐", price: "₹450 / session" },
+    ],
 
-  "Project Guidance": [
-    { name: "Arun Guide", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
-    { name: "Priya Mentor", exp: "3 Years", rating: "4.6 ⭐", price: "₹650 / project" },
-  ],
+    "Project Guidance": [
+      { name: "Arun Guide", exp: "5 Years", rating: "4.8 ⭐", price: "₹700 / project" },
+      { name: "Priya Mentor", exp: "3 Years", rating: "4.6 ⭐", price: "₹650 / project" },
+    ],
 
-  "Exam Coaching": [
-    { name: "Rakesh Sir", exp: "8 Years", rating: "4.9 ⭐", price: "₹600 / session" },
-    { name: "Deepa Mam", exp: "5 Years", rating: "4.7 ⭐", price: "₹550 / session" },
-  ],
+    "Exam Coaching": [
+      { name: "Rakesh Sir", exp: "8 Years", rating: "4.9 ⭐", price: "₹600 / session" },
+      { name: "Deepa Mam", exp: "5 Years", rating: "4.7 ⭐", price: "₹550 / session" },
+    ],
 
-  "Assignment Help": [
-    { name: "StudyAssist Team", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / assignment" },
-    { name: "EduPro Experts", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / assignment" },
-  ],
+    "Assignment Help": [
+      { name: "StudyAssist Team", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / assignment" },
+      { name: "EduPro Experts", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / assignment" },
+    ],
 
-  /* ================= CREATIVE ================= */
+    /* ================= CREATIVE ================= */
 
-  "Graphic Design": [
-    { name: "Ritika Arts", exp: "3 Years", rating: "4.8 ⭐", price: "₹500 / design" },
-    { name: "Aditya Design", exp: "4 Years", rating: "4.7 ⭐", price: "₹600 / design" },
-  ],
+    "Graphic Design": [
+      { name: "Ritika Arts", exp: "3 Years", rating: "4.8 ⭐", price: "₹500 / design" },
+      { name: "Aditya Design", exp: "4 Years", rating: "4.7 ⭐", price: "₹600 / design" },
+    ],
 
-  "Video Editing": [
-    { name: "Rohan Editz", exp: "3 Years", rating: "4.7 ⭐", price: "₹700 / video" },
-    { name: "Aisha Studio", exp: "2 Years", rating: "4.5 ⭐", price: "₹650 / video" },
-  ],
+    "Video Editing": [
+      { name: "Rohan Editz", exp: "3 Years", rating: "4.7 ⭐", price: "₹700 / video" },
+      { name: "Aisha Studio", exp: "2 Years", rating: "4.5 ⭐", price: "₹650 / video" },
+    ],
 
-  "Content Writing": [
-    { name: "Kavya Writes", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / article" },
-    { name: "ContentPro Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / article" },
-  ],
+    "Content Writing": [
+      { name: "Kavya Writes", exp: "4 Years", rating: "4.8 ⭐", price: "₹400 / article" },
+      { name: "ContentPro Team", exp: "3 Years", rating: "4.6 ⭐", price: "₹350 / article" },
+    ],
 
-  "Photography": [
-    { name: "LensMaster Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹1200 / event" },
-    { name: "SnapShot Studio", exp: "4 Years", rating: "4.7 ⭐", price: "₹1000 / event" },
-  ],
+    "Photography": [
+      { name: "LensMaster Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹1200 / event" },
+      { name: "SnapShot Studio", exp: "4 Years", rating: "4.7 ⭐", price: "₹1000 / event" },
+    ],
 
-  /* ================= PROFESSIONAL ================= */
+    /* ================= PROFESSIONAL ================= */
 
-  "Resume Building": [
-    { name: "CareerPro Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹400 / resume" },
-    { name: "Shalini HR", exp: "4 Years", rating: "4.7 ⭐", price: "₹350 / resume" },
-  ],
+    "Resume Building": [
+      { name: "CareerPro Raj", exp: "5 Years", rating: "4.9 ⭐", price: "₹400 / resume" },
+      { name: "Shalini HR", exp: "4 Years", rating: "4.7 ⭐", price: "₹350 / resume" },
+    ],
 
-  "Digital Marketing": [
-    { name: "MarketBoost Team", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / campaign" },
-    { name: "SEO Experts", exp: "4 Years", rating: "4.6 ⭐", price: "₹750 / campaign" },
-  ],
+    "Digital Marketing": [
+      { name: "MarketBoost Team", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / campaign" },
+      { name: "SEO Experts", exp: "4 Years", rating: "4.6 ⭐", price: "₹750 / campaign" },
+    ],
 
-  "Business Consulting": [
-    { name: "Vivek Advisor", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / session" },
-    { name: "Aman Strategy", exp: "5 Years", rating: "4.7 ⭐", price: "₹850 / session" },
-  ],
-};
+    "Business Consulting": [
+      { name: "Vivek Advisor", exp: "6 Years", rating: "4.8 ⭐", price: "₹900 / session" },
+      { name: "Aman Strategy", exp: "5 Years", rating: "4.7 ⭐", price: "₹850 / session" },
+    ],
+  };
 
   const professionals = professionalsData[decodedService] || [];
 
   const confirmHire = () => {
+    if (!selectedDate || !selectedTime) {
+      alert("Please select date and time");
+      return;
+    }
+
+    const existingBookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    const conflict = existingBookings.find(
+      (b) =>
+        b.name === selectedPro.name &&
+        b.date === selectedDate &&
+        b.time === selectedTime
+    );
+
+    if (conflict) {
+      setAvailabilityMsg("❌ Not Available. Select another time.");
+      return;
+    }
+
+    const newBooking = {
+      name: selectedPro.name,
+      service: decodedService,
+      price: selectedPro.price,
+      date: selectedDate,
+      time: selectedTime,
+    };
+
+    localStorage.setItem(
+      "bookings",
+      JSON.stringify([...existingBookings, newBooking])
+    );
+
     setHiredList([...hiredList, selectedPro.name]);
+    setAvailabilityMsg("✅ Successfully Hired!");
     setSelectedPro(null);
   };
 
@@ -161,7 +197,10 @@ function ServiceDetails() {
             ) : (
               <button
                 style={buttonStyle}
-                onClick={() => setSelectedPro(pro)}
+                onClick={() => {
+                  setSelectedPro(pro);
+                  setAvailabilityMsg("");
+                }}
               >
                 Hire
               </button>
@@ -178,18 +217,25 @@ function ServiceDetails() {
             <p><strong>Experience:</strong> {selectedPro.exp}</p>
             <p><strong>Rating:</strong> {selectedPro.rating}</p>
             <p><strong>Price:</strong> {selectedPro.price}</p>
-            <p style={{ marginTop: "15px" }}>
-              Do you really want to hire this professional?
-            </p>
+
+            <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} style={inputStyle}/>
+            <input type="time" value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} style={inputStyle}/>
+
+            {availabilityMsg && (
+              <p style={{
+                marginTop: "10px",
+                color: availabilityMsg.includes("Successfully") ? "#22c55e" : "red",
+                fontWeight: "bold",
+              }}>
+                {availabilityMsg}
+              </p>
+            )}
 
             <div style={{ marginTop: "20px" }}>
               <button style={confirmButton} onClick={confirmHire}>
                 Yes, Hire
               </button>
-              <button
-                style={cancelButton}
-                onClick={() => setSelectedPro(null)}
-              >
+              <button style={cancelButton} onClick={() => setSelectedPro(null)}>
                 Cancel
               </button>
             </div>
@@ -201,13 +247,11 @@ function ServiceDetails() {
 }
 
 /* Styles */
+
 const cardStyle = {
   padding: "25px",
   background: "rgba(255,255,255,0.15)",
   borderRadius: "14px",
-  backdropFilter: "blur(10px)",
-  color: "white",
-  boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
 };
 
 const priceStyle = {
@@ -253,6 +297,14 @@ const modalBox = {
   borderRadius: "12px",
   width: "350px",
   textAlign: "center",
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "8px",
+  marginTop: "10px",
+  borderRadius: "6px",
+  border: "none",
 };
 
 const confirmButton = {
