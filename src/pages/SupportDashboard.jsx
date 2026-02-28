@@ -1,3 +1,4 @@
+// SupportDashboard.jsx - A dashboard for customer support agents to manage tickets and assist users
 import "../index.css";
 
 function SupportDashboard() {
