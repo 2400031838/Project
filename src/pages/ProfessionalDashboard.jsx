@@ -7,54 +7,63 @@ function ProfessionalDashboard() {
 
   const [earnings, setEarnings] = useState(0);
   const [clients, setClients] = useState(0);
-  const [averageRating, setAverageRating] = useState("0 ⭐");
   const [bookings, setBookings] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    const storedBookings =
-      JSON.parse(localStorage.getItem("bookings")) || [];
+    const fetchBookings = () => {
+      fetch(`http://localhost:8080/booking/professional/${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
 
-    if (storedBookings.length === 0) {
-      // Demo values if no bookings yet
-      setEarnings(12500);
-      setClients(8);
-      setAverageRating("4.7 ⭐");
-      return;
-    }
+          // 🔔 Show notification only if new booking added
+          if (data.length > bookings.length) {
+            setShowNotification(true);
 
-    let total = 0;
-    let totalRating = 0;
+            setTimeout(() => {
+              setShowNotification(false);
+            }, 3000);
+          }
 
-    storedBookings.forEach((b) => {
-      const priceNumber = b.price
-        ? parseInt(b.price.replace(/[^0-9]/g, ""))
-        : 0;
+          setBookings(data);
 
-      total += priceNumber;
+          // 💰 Calculate earnings
+          let total = 0;
+          data.forEach((b) => {
+            const price = parseInt(b.price.replace(/[^0-9]/g, "")) || 0;
+            total += price;
+          });
 
-      if (b.rating) {
-        totalRating += parseFloat(b.rating);
-      }
-    });
+          setEarnings(total);
 
-    const avg =
-      storedBookings.length > 0
-        ? (totalRating / storedBookings.length).toFixed(1)
-        : "4.5";
+          // 📊 Booking count (THIS IS YOUR MAIN REQUIREMENT)
+          setClients(data.length);
+        });
+    };
 
-    setEarnings(total);
-    setClients(storedBookings.length);
-    setAverageRating(avg + " ⭐");
-    setBookings(storedBookings);
-  }, []);
+    fetchBookings(); // first load
+
+    const interval = setInterval(fetchBookings, 5000); // auto refresh every 5 sec
+
+    return () => clearInterval(interval);
+  }, [user.email, bookings.length]);
 
   return (
     <div style={{ padding: "40px", color: "white" }}>
 
+      {/* 🔔 Notification */}
+      {showNotification && (
+        <div style={notificationStyle}>
+          🎉 You got a new booking!
+        </div>
+      )}
+
       {/* Header */}
       <div style={headerStyle}>
         <h1>Professional Dashboard 👨‍💼</h1>
-        <p>Manage your services, track earnings, and grow your client base.</p>
+        <p>Manage your services and bookings</p>
       </div>
 
       {/* Stats */}
@@ -66,60 +75,51 @@ function ProfessionalDashboard() {
 
         <div style={statCard}>
           <h2>{clients}</h2>
-          <p>Active Clients</p>
-        </div>
-
-        <div style={statCard}>
-          <h2>{averageRating}</h2>
-          <p>Average Rating</p>
+          <p>Total Bookings</p>
         </div>
       </div>
 
-      {/* Manage */}
-      <h2 style={{ marginTop: "50px", marginBottom: "20px" }}>
-        Manage Services
-      </h2>
+      {/* Actions */}
+      <h2 style={{ marginTop: "40px" }}>Manage</h2>
 
       <div style={manageGrid}>
         <div style={actionCard} onClick={() => navigate("/add-service")}>
-          <h3>➕ Add New Service</h3>
-          <p>Create and publish a new service offering.</p>
-        </div>
-
-        <div style={actionCard} onClick={() => navigate("/view-bookings")}>
-          <h3>📋 View Bookings</h3>
-          <p>Check booking requests from clients.</p>
+          ➕ Add Service
         </div>
 
         <div style={actionCard} onClick={() => navigate("/edit-profile")}>
-          <h3>✏ Edit Profile</h3>
-          <p>Update your skills, pricing, and portfolio.</p>
+          ✏ Edit Profile
         </div>
       </div>
 
-      {/* Recent Bookings */}
-      <h2 style={{ marginTop: "50px", marginBottom: "20px" }}>
-        Recent Bookings
-      </h2>
+      {/* BOOKINGS */}
+      <h2 style={{ marginTop: "40px" }}>My Bookings</h2>
 
       {bookings.length === 0 && <p>No bookings yet.</p>}
 
       {bookings.map((b, index) => (
         <div key={index} style={bookingCard}>
-          <p><strong>Client:</strong> {b.name}</p>
           <p><strong>Service:</strong> {b.service}</p>
-          <p><strong>Price:</strong> {b.price}</p>
-          <p>
-            <strong>Status:</strong>{" "}
-            <span style={{ color: "#22c55e" }}>Hired</span>
-          </p>
+          <p><strong>Price:</strong> ₹{b.price}</p>
+          <p><strong>Date:</strong> {b.date}</p>
+          <p><strong>Time:</strong> {b.time}</p>
+          <p style={{ color: "#22c55e" }}>Hired ✅</p>
         </div>
       ))}
     </div>
   );
 }
 
-/* Styles */
+/* STYLES */
+
+const notificationStyle = {
+  background: "#22c55e",
+  padding: "15px",
+  borderRadius: "10px",
+  marginBottom: "20px",
+  textAlign: "center",
+  fontWeight: "bold",
+};
 
 const headerStyle = {
   background: "linear-gradient(135deg, #1e3a8a, #2563eb)",
@@ -149,16 +149,17 @@ const manageGrid = {
 
 const actionCard = {
   background: "rgba(255,255,255,0.15)",
-  padding: "30px",
-  borderRadius: "16px",
+  padding: "20px",
+  borderRadius: "12px",
   cursor: "pointer",
+  textAlign: "center",
 };
 
 const bookingCard = {
   background: "rgba(255,255,255,0.15)",
   padding: "20px",
   borderRadius: "12px",
-  marginBottom: "15px",
+  marginTop: "15px",
 };
 
 export default ProfessionalDashboard;

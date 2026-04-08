@@ -5,10 +5,12 @@ import "../index.css";
 
 function Login() {
   const navigate = useNavigate();
+
   const [role, setRole] = useState("");
   const [captchaText, setCaptchaText] = useState("");
   const [userInput, setUserInput] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     generateCaptcha();
@@ -24,9 +26,9 @@ function Login() {
     setCaptchaText(result);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (userInput !== captchaText) {
-      alert("Incorrect CAPTCHA. Try again.");
+      alert("Incorrect CAPTCHA ❌");
       generateCaptcha();
       setUserInput("");
       return;
@@ -37,26 +39,48 @@ function Login() {
       return;
     }
 
-    if (!email) {
-      alert("Please enter email");
+    if (!email || !password) {
+      alert("Enter email and password");
       return;
     }
 
-    /* ✅ SAVE USER TO LOCALSTORAGE */
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        name: email.split("@")[0],  // show username before @
-        role: role,
-      })
-    );
+    try {
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    /* ✅ Navigate Based on Role */
-    if (role === "User") navigate("/user-dashboard");
-    else if (role === "Professional")
-      navigate("/professional-dashboard");
-    else if (role === "Admin") navigate("/admin-dashboard");
-    else if (role === "Support") navigate("/support-dashboard");
+      const data = await response.json();
+
+      if (!data) {
+        alert("Invalid credentials ❌");
+        return;
+      }
+
+      // Save logged-in user
+      localStorage.setItem("user", JSON.stringify(data));
+
+      // Role-based navigation
+      if (data.role === "USER") {
+        navigate("/user-dashboard");
+      } else if (data.role === "PROFESSIONAL") {
+        navigate("/professional-dashboard");
+      } else if (data.role === "ADMIN") {
+        navigate("/admin-dashboard");
+      } else if (data.role === "SUPPORT") {
+        navigate("/support-dashboard");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Server error ❌");
+    }
   };
 
   return (
@@ -91,6 +115,8 @@ function Login() {
         <input
           type="password"
           placeholder="Enter Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           style={inputStyle}
         />
 
@@ -100,10 +126,10 @@ function Login() {
           style={selectStyle}
         >
           <option value="">Select Role</option>
-          <option value="User">User</option>
-          <option value="Professional">Professional</option>
-          <option value="Admin">Admin</option>
-          <option value="Support">Support</option>
+          <option value="USER">User</option>
+          <option value="PROFESSIONAL">Professional</option>
+          <option value="ADMIN">Admin</option>
+          <option value="SUPPORT">Support</option>
         </select>
 
         {/* CAPTCHA */}

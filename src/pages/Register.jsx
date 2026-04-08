@@ -4,9 +4,13 @@ import "../index.css";
 
 function Register() {
   const navigate = useNavigate();
+
   const [role, setRole] = useState("");
   const [captchaText, setCaptchaText] = useState("");
   const [userInput, setUserInput] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     generateCaptcha();
@@ -22,9 +26,9 @@ function Register() {
     setCaptchaText(result);
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (userInput !== captchaText) {
-      alert("Incorrect CAPTCHA. Try again.");
+      alert("Incorrect CAPTCHA ❌");
       generateCaptcha();
       setUserInput("");
       return;
@@ -35,8 +39,35 @@ function Register() {
       return;
     }
 
-    alert("Account Created Successfully!");
-    navigate("/login");
+    if (!email || !password) {
+      alert("Enter email and password");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          role
+        })
+      });
+
+      const data = await response.json();
+
+      if (data) {
+        alert("Account Created Successfully ✅");
+        navigate("/login");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Registration failed ❌");
+    }
   };
 
   return (
@@ -69,12 +100,16 @@ function Register() {
         <input
           type="email"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           style={inputStyle}
         />
 
         <input
           type="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           style={inputStyle}
         />
 
@@ -84,13 +119,13 @@ function Register() {
           style={selectStyle}
         >
           <option value="">Select Role</option>
-          <option value="User">User</option>
-          <option value="Professional">Professional</option>
-          <option value="Admin">Admin</option>
-          <option value="Support">Support</option>
+          <option value="USER">User</option>
+          <option value="PROFESSIONAL">Professional</option>
+          <option value="ADMIN">Admin</option>
+          <option value="SUPPORT">Support</option>
         </select>
 
-        {/* CAPTCHA DISPLAY */}
+        {/* CAPTCHA */}
         <div
           style={{
             margin: "15px 0",
